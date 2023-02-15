@@ -11,6 +11,8 @@ export { Property } from './pages/Property/Property';
 export { Login } from './pages/Login/Login';
 export { SignUp } from './pages/SignUp/SignUp';
 export { Settings } from './pages/Settings/Settings';
+export { ForgotPassword } from './pages/ForgotPassword/ForgotPassword';
+export { ResetPassword } from './pages/ResetPassword/ResetPassword';
 
 // Layout
 export { AlertComponent } from './layout/Alert/Alert';
@@ -18,7 +20,6 @@ export { Footer } from './layout/Footer/Footer';
 export { Header } from './layout/Header/Header';
 export { Layout } from './layout/Layout/Layout';
 export { Search } from './layout/Search/Search';
-export { ForgotPassword} from './pages/ForgotPassword/ForgotPassword'
 
 // Components
 export { CustomAvatar } from './CustomAvatar/CustomAvatar';

@@ -1,5 +1,5 @@
 import { ObjectId } from 'mongoose';
-import { ImageType, InstanceOfWithDates, WithId, WithIdAndTimestamps } from './common.types';
+import { ImageType, InstanceOfWithDates, WithId, WithIdAndTimestamps } from '.';
 
 export type PropertySchema = {
     name: string;

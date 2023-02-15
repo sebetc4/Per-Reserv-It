@@ -20,16 +20,3 @@ export type WithIdAndTimestamps<T> = WithId<T> & {
 export type InstanceOf<T> = HydratedDocument<T>
 
 export type InstanceOfWithDates<T> = InstanceOf<T> & SchemaTimestampsConfig
-
-/**
- * Naviguation
- */
-
-export enum Path {
-    HOME = "/",
-    LOGIN = "/login",
-    SIGNUP = "/signup",
-    FORGOT_PASSWORD = "/password/forgot",
-    PROPERTY = "/property",
-
-}

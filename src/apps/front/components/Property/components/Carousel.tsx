@@ -3,7 +3,7 @@ import { Swiper, SwiperSlide } from 'swiper/react';
 import SwiperCore, { Pagination } from 'swiper';
 import { Box } from '@mui/material';
 import { PropertySchema } from '../../../../../packages/types/properties.types';
-import { ImageType } from '../../../../../packages/types/common.types';
+import { ImageType } from '../../../../../packages/types/router.types';
 import 'swiper/css';
 import 'swiper/css/pagination';
 

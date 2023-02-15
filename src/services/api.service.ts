@@ -33,6 +33,9 @@ class ApiService {
     forgotPassword(data: ForgotPasswordBody) {
         return this.api.post('/auth/password/forgot', data);
     }
+    checkResetPasswordToken(token: string) {
+        return this.api.get(`/auth/password/reset/${token}`);
+    }
     resetPassword(data: ResetPasswordBody, token: string) {
         return this.api.post(`/auth/password/reset/${token}`, data);
     }

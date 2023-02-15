@@ -78,11 +78,11 @@ export const resetPasswordSchema: yup.SchemaOf<ResetPasswordBody> = yup.object()
     newPassword: yup
         .string()
         .notOneOf([yup.ref('currentPassword')], 'Le nouveau mot de passe doit être diffèrent du mot de passe actuel')
-        .required('Le nouveau mot de passe est requis')
         .min(6, 'Le mot de passe est invalide')
-        .max(40, 'Le mot de passe est invalide'),
+        .max(40, 'Le mot de passe est invalide')
+        .required('Le nouveau mot de passe est requis'),
     confirmPassword: yup
         .string()
+        .oneOf([yup.ref('newPassword')], 'Les mots de passe ne sont pas identique')
         .required('La confirmation du mot de passe est requise')
-        .oneOf([yup.ref('newPassword')], 'Les mots de passe ne sont pas identique'),
     });

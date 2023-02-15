@@ -3,11 +3,11 @@ import { ForgotPassword } from '../../apps/front/components';
 import { requireUnauthUser } from '../../apps/server/utils';
 import { wrapper } from '../../store/store';
 
-export default function SignUpPage() {
+export default function ForgotPasswordPage() {
     return (
         <>
             <Head>
-                <title>Inscription - Reserv'It</title>
+                <title>Mot de passe oublié- Reserv'It</title>
             </Head>
             <ForgotPassword />
         </>

@@ -235,21 +235,19 @@ export const forgotPassword = createAsyncThunk<any, ForgotPasswordBody, { reject
     }
 );
 
-export const resetPassword = createAsyncThunk<
-    any,
-    { body: ResetPasswordBody; token: string },
-    { rejectValue: string }
->('auth/resetPassword', async ({body, token}, { rejectWithValue }) => {
-    try {
-        const { data } = await api.resetPassword(body, token);
-        return data.session;
-    } catch (err) {
-        if (err instanceof AxiosError) {
-            return rejectWithValue(err.response?.data.message);
+export const resetPassword = createAsyncThunk<any, { body: ResetPasswordBody; token: string }, { rejectValue: string }>(
+    'auth/resetPassword',
+    async ({ body, token }, { rejectWithValue }) => {
+        try {
+            await api.resetPassword(body, token);
+        } catch (err) {
+            if (err instanceof AxiosError) {
+                return rejectWithValue(err.response?.data.message);
+            }
+            throw err;
         }
-        throw err;
     }
-});
+);
 
 export const { setAuthIsChecked, setUserIsAuth, setAuthError, setInvalidSession } = authSlice.actions;
 export const authReducer = authSlice.reducer;

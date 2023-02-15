@@ -1,4 +1,4 @@
-import { InstanceOfWithDates, WithId } from './common.types';
+import { InstanceOfWithDates, WithId } from '.';
 
 export type UserSchema = {
     authProvider: 'credentials' | 'google';

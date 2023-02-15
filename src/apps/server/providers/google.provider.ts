@@ -1,5 +1,5 @@
 import { Account } from 'next-auth';
-import { QueryErrors, UserInstance } from '../../../packages/types';
+import { Path, QueryParams, UserInstance } from '../../../packages/types';
 import { dbConnect } from '../config';
 import { User } from '../models/User.model';
 
@@ -20,5 +20,5 @@ export const handleGoogleProvider = async (profile: any, account: Account): Prom
         account.userId = user.id;
         return true;
     }
-    return `/login?error=${QueryErrors.EMAIL_ALREADY_EXISTS}`;
+    return `${Path.LOGIN}?m=${QueryParams.EMAIL_ALREADY_EXISTS_WITH_DIFFERENT_PROVIDER}`;
 };

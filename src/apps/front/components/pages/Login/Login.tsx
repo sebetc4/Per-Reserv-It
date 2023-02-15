@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
 import { useRouter } from 'next/router';
@@ -9,18 +9,20 @@ import { Box, Typography, Grid, Container } from '@mui/material';
 import { LoadingButton } from '@mui/lab';
 
 import { CustomPasswordInput, CustomTextField, GoogleButton } from '../..';
-import { useAppDispatch, useAppSelector } from '../../../hooks';
-import { Path, SignInBody } from '../../../../../packages/types';
+import { useAppDispatch } from '../../../hooks';
+import { Path, QueryParams, SignInBody } from '../../../../../packages/types';
 import { signInSchema } from '../../../../../packages/schemas';
 import { CustomError } from '../../../../../packages/classes';
 import { setAlert, signInWithCredentials } from '../../../../../store';
 
 import LoginImage from '../../../../../../public/images/login-hotel.jpg';
+
 export const Login = () => {
     // Hooks
     const dispatch = useAppDispatch();
     const router = useRouter();
 
+    // Form
     const {
         register,
         handleSubmit,
@@ -31,20 +33,31 @@ export const Login = () => {
         mode: 'onTouched',
     });
 
-    // Store
-    const { error } = useAppSelector((state) => state.auth);
-
+    // State
     const [showProviderError, setShowProviderError] = useState<boolean>(false);
 
+    // Effects
+    useEffect(() => {
+        const params = router.query.p;
+        switch (params) {
+            case QueryParams.EMAIL_ALREADY_EXISTS_WITH_DIFFERENT_PROVIDER:
+                setShowProviderError(true);
+                break;
+            case QueryParams.RESET_PASSWORD_SUCCESS:
+                dispatch(setAlert({ type: 'success', message: 'Votre mot de passe a été mis à jour.' }));
+                break;
+        }
+    }, [router.query.p]);
+
+    // Handlers
     const onSubmit = async (data: SignInBody) => {
         showProviderError && setShowProviderError(false);
         const res = await dispatch(signInWithCredentials(data));
         if (res.meta.requestStatus === 'fulfilled') {
-            router.replace('/');
+            router.replace(Path.HOME);
         } else {
             switch (res.payload) {
-                case CustomError.EMAIL_ALREADY_EXISTS.message ||
-                    error === CustomError.EMAIL_ALREADY_EXISTS_OTHER_PROVIDER.message:
+                case CustomError.EMAIL_ALREADY_EXISTS_OTHER_PROVIDER.message:
                     setShowProviderError(true);
                     break;
                 case CustomError.WRONG_EMAIL.message:
@@ -92,10 +105,7 @@ export const Login = () => {
                 >
                     <Typography
                         component='h1'
-                        variant='h4'
-                        sx={{
-                            margin: 1,
-                        }}
+                        variant='h3'
                     >
                         Connexion
                     </Typography>
@@ -103,7 +113,8 @@ export const Login = () => {
                         component='h2'
                         align='center'
                         sx={{
-                            marginBottom: 4,
+                            mt: 1,
+                            mb: 3,
                         }}
                     >
                         Heureux de vous retouver! Connectez-vous pour accéder à votre compte.
@@ -116,39 +127,37 @@ export const Login = () => {
                             display: 'flex',
                             flexDirection: 'column',
                             alignItems: 'center',
+                            gap: 2,
                         }}
                     >
-                        <Box
+                        <CustomTextField
+                            name='email'
+                            label='Adresse e-mail'
+                            type='email'
+                            register={register('email')}
+                            errorMessage={errors.email?.message || null}
+                        />
+                        <CustomPasswordInput
+                            name='password'
+                            label='Mot de passe'
+                            register={register('password')}
+                            errorMessage={errors.password?.message || null}
+                        />
+                        <Typography
+                            component={Link}
+                            href={Path.FORGOT_PASSWORD}
+                            color='primary'
                             sx={{
-                                display: 'flex',
-                                flexDirection: 'column',
-                                width: '100%',
-                                gap: 2,
+                                textDecoration: 'none',
                             }}
                         >
-                            <CustomTextField
-                                name='email'
-                                label='Adresse e-mail'
-                                type='email'
-                                register={register('email')}
-                                errorMessage={errors.email?.message || null}
-                            />
-                            <CustomPasswordInput
-                                name='password'
-                                label='Mot de passe'
-                                register={register('password')}
-                                errorMessage={errors.password?.message || null}
-                            />
-                        </Box>
-                        <Box>
-                            <Link href={Path.FORGOT_PASSWORD}>Mot de passe oublié?</Link>
-                        </Box>
+                            Mot de passe oublié?
+                        </Typography>
                         <LoadingButton
                             loading={isSubmitting}
                             disabled={isSubmitting}
                             type='submit'
                             variant='contained'
-                            sx={{ marginTop: 4, marginBottom: 2 }}
                             fullWidth
                             size='large'
                         >
@@ -158,7 +167,7 @@ export const Login = () => {
                         {showProviderError && (
                             <Typography
                                 color='error'
-                                sx={{ mt: 4, textAlign: 'center' }}
+                                sx={{ mt: 2, textAlign: 'center' }}
                             >
                                 Un compte est déjà lié à cette adresse e-mail avec une autre méthode de connexion
                             </Typography>
@@ -166,21 +175,17 @@ export const Login = () => {
                     </Box>
                     <Box sx={{ mt: 4, display: 'flex', gap: 1 }}>
                         <Typography>Vous n'avez pas de compte ?</Typography>
-                        <Link
+                        <Typography
+                            component={Link}
                             href={Path.SIGNUP}
-                            style={{ textDecoration: 'none' }}
+                            color='primary'
+                            sx={{
+                                fontWeight: 600,
+                                textDecoration: 'none',
+                            }}
                         >
-                            <Typography
-                                color='primary'
-                                sx={{
-                                    fontWeight: 600,
-                                    textDecoration: 'none',
-                                    cursor: 'pointer',
-                                }}
-                            >
-                                Inscrivez-vous
-                            </Typography>
-                        </Link>
+                            Inscrivez-vous
+                        </Typography>
                     </Box>
                 </Container>
             </Grid>
@@ -203,6 +208,8 @@ export const Login = () => {
                         objectFit: 'cover',
                         objectPosition: 'center',
                     }}
+                    placeholder='blur'
+                    quality={100}
                 />
             </Grid>
         </Grid>
