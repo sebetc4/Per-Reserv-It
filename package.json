@@ -1,0 +1,50 @@
+{
+  "name": "reservit",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "next lint"
+  },
+  "dependencies": {
+    "@emotion/react": "^11.10.5",
+    "@emotion/styled": "^11.10.5",
+    "@hookform/resolvers": "^2.9.10",
+    "@mui/icons-material": "^5.10.16",
+    "@mui/lab": "5.0.0-alpha.112",
+    "@mui/material": "^5.10.16",
+    "@reduxjs/toolkit": "^1.9.1",
+    "axios": "^1.2.0",
+    "bcrypt": "^5.1.0",
+    "cloudinary": "^1.32.0",
+    "eslint": "8.28.0",
+    "eslint-config-next": "13.0.5",
+    "googleapis": "^109.0.1",
+    "mongoose": "^6.7.3",
+    "next": "13.0.5",
+    "next-auth": "^4.18.4",
+    "next-redux-wrapper": "^8.0.0",
+    "nodemailer": "^6.8.0",
+    "react": "18.2.0",
+    "react-dom": "18.2.0",
+    "react-easy-crop": "^4.6.3",
+    "react-hook-form": "^7.40.0",
+    "react-redux": "^8.0.5",
+    "swiper": "^8.4.5",
+    "typescript": "4.9.3",
+    "validator": "^13.7.0",
+    "vanilla-tilt": "^1.7.3",
+    "yup": "^0.32.11"
+  },
+  "devDependencies": {
+    "@types/bcrypt": "^5.0.0",
+    "@types/node": "18.11.9",
+    "@types/nodemailer": "^6.4.7",
+    "@types/react": "18.0.25",
+    "@types/react-dom": "18.0.9",
+    "@types/react-redux": "^7.1.24",
+    "@types/validator": "^13.7.10"
+  }
+}
